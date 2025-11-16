@@ -1734,43 +1734,45 @@
       }
 
       // --- Menu Hamburger ---
-      const menuToggle = document.querySelector('.menu-toggle');
-      const nav = document.querySelector('nav');
-      const menuOverlay = document.querySelector('.menu-overlay');
-      const navLinks = document.querySelectorAll('nav ul li a');
+      const menuToggle = document.querySelector(".menu-toggle");
+      const nav = document.querySelector("nav");
+      const menuOverlay = document.querySelector(".menu-overlay");
+      const navLinks = document.querySelectorAll("nav ul li a");
 
       function toggleMenu() {
-        menuToggle.classList.toggle('active');
-        nav.classList.toggle('active');
-        menuOverlay.classList.toggle('active');
-        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-        menuToggle.setAttribute('aria-expanded', !isExpanded);
-        
+        menuToggle.classList.toggle("active");
+        nav.classList.toggle("active");
+        menuOverlay.classList.toggle("active");
+        const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", !isExpanded);
+
         // Previne scroll do body quando menu estiver aberto
-        document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+        document.body.style.overflow = nav.classList.contains("active")
+          ? "hidden"
+          : "";
       }
 
       function closeMenu() {
-        menuToggle.classList.remove('active');
-        nav.classList.remove('active');
-        menuOverlay.classList.remove('active');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
+        menuToggle.classList.remove("active");
+        nav.classList.remove("active");
+        menuOverlay.classList.remove("active");
+        menuToggle.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
       }
 
-      menuToggle.addEventListener('click', toggleMenu);
+      menuToggle.addEventListener("click", toggleMenu);
 
       // Fecha o menu ao clicar em um link
-      navLinks.forEach(link => {
-        link.addEventListener('click', closeMenu);
+      navLinks.forEach((link) => {
+        link.addEventListener("click", closeMenu);
       });
 
       // Fecha o menu ao clicar no overlay
-      menuOverlay.addEventListener('click', closeMenu);
+      menuOverlay.addEventListener("click", closeMenu);
 
       // Fecha o menu ao pressionar ESC
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && nav.classList.contains('active')) {
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && nav.classList.contains("active")) {
           closeMenu();
         }
       });
