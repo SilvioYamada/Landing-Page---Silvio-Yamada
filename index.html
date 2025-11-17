@@ -412,6 +412,20 @@
             rgba(0, 163, 255, 0.1),
             transparent 30%
           );
+        background-size: 200% 200%;
+        animation: gradientMove 20s ease infinite;
+      }
+
+      @keyframes gradientMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
       }
 
       #hero .container {
@@ -540,13 +554,19 @@
         position: relative;
         aspect-ratio: 16 / 9;
         overflow: hidden;
-        background: var(--color-surface);
+        background: #000;
         transition: opacity 0.3s ease;
         cursor: pointer;
         border-radius: 0;
       }
 
-      .portfolio-card picture,
+      .portfolio-card picture {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
       .portfolio-card img {
         display: block;
         width: 100%;
@@ -559,7 +579,42 @@
       }
 
       .portfolio-card:hover picture img {
-        transform: scale(1.05);
+        transform: scale(1.08);
+      }
+
+      .midia-social-slide img {
+        object-fit: contain;
+        transform: scale(1.3) translateY(10%);
+        object-position: center bottom;
+        position: relative;
+        z-index: 1;
+      }
+
+      .midia-social-slide::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: var(--bg-image);
+        background-size: cover;
+        background-position: center;
+        filter: blur(30px) brightness(0.5);
+        transform: scale(1.2);
+        z-index: 0;
+      }
+
+      .midia-social-slide:hover img {
+        transform: scale(1.35) translateY(10%);
+      }
+
+      .bball-slide img {
+        transform: scale(1.12);
+      }
+
+      .bball-slide:hover img {
+        transform: scale(1.18);
       }
 
       .portfolio-overlay {
@@ -576,6 +631,7 @@
         );
         transition: background 0.4s ease-out;
         transform: translateY(0);
+        z-index: 2;
       }
 
       .portfolio-card:hover .portfolio-overlay {
@@ -605,40 +661,45 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.6);
         border: none;
         color: #fff;
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
         cursor: pointer;
         z-index: 50;
         display: flex;
         align-items: center;
         justify-content: center;
-        opacity: 0.7;
+        opacity: 0.8;
         transition: all 0.3s ease;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        outline: none;
+      }
+
+      .slider-control:focus {
+        outline: none;
       }
 
       .slider-control:hover {
         opacity: 1;
         background: var(--color-primary);
         color: #121212;
-        transform: translateY(-50%) scale(1.1);
+        transform: translateY(-50%) scale(1.15);
       }
 
       .slider-control.prev-btn {
-        left: 0;
+        left: 10px;
       }
 
       .slider-control.next-btn {
-        right: 0;
+        right: 10px;
       }
 
       .slider-control svg {
-        width: 60%;
-        height: 60%;
+        width: 65%;
+        height: 65%;
       }
 
       .slider-indicators {
@@ -1471,9 +1532,14 @@
 
         .portfolio-card {
           width: 100%;
-          aspect-ratio: 4 / 3;
+          aspect-ratio: 16 / 10;
           border-radius: 0;
           background: #000;
+        }
+
+        .portfolio-card picture {
+          width: 100%;
+          height: 100%;
         }
 
         .portfolio-card img {
@@ -1508,22 +1574,22 @@
         }
 
         .slider-control {
-          width: 44px;
-          height: 44px;
-          font-size: 1.1rem;
+          width: 42px;
+          height: 42px;
+          opacity: 0.9;
         }
 
         .slider-control.prev-btn {
-          left: 4px;
+          left: 8px;
         }
 
         .slider-control.next-btn {
-          right: 4px;
+          right: 8px;
         }
 
-        .slider-control {
-          width: 40px;
-          height: 40px;
+        .slider-control svg {
+          width: 65%;
+          height: 65%;
         }
 
         #hero .cta-button {
@@ -1691,135 +1757,118 @@
 
           <div class="modern-portfolio-slider" id="portfolioSlider">
             <div class="slider-main-view">
+              
+              <!-- BOTÕES DE CONTROLE (Adicionados) -->
+              <button class="slider-control prev-btn" aria-label="Slide Anterior">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+              </button>
+
               <div class="slider-track">
-                <a
-                  href="https://www.behance.net/gallery/238048525/Editor-de-Websites-Builderall"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="portfolio-card slider-slide"
-                >
+                
+                <!-- Slide 1: Wordpress PRO -->
+                <a href="https://www.behance.net/gallery/238048525/Editor-de-Websites-Builderall" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide" aria-label="Ver Projeto Wordpress PRO Dashboard no Behance">
                   <picture>
-                    <img
-                      src="img/1.jpg"
-                      alt="Dashboard de Gerenciamento B2B Wordpress PRO"
-                      loading="lazy"
-                    />
+                    <img src="img/Ferramenta Drag-and-Drop | Builderall Website Builder.jpg" alt="Dashboard de Gerenciamento B2B Wordpress PRO" loading="lazy">
                   </picture>
                   <div class="portfolio-overlay">
-                    <h3>
-                      Ferramenta Drag-and-Drop | Builderall Website Builder
-                    </h3>
-                    <p>
-                      Projeto de reestruturação de UI/UX para editor de
-                      websites, focado na usabilidade e performance.
-                    </p>
+                    <h3>Ferramenta Drag-and-Drop | Builderall Website Builder</h3>
+                    <p>Projeto de reestruturação de UI/UX para editor de websites.</p>
                   </div>
                 </a>
 
-                <a
-                  href="https://www.behance.net/gallery/123120797/Booking-Sistema-de-Agendamento-Builderall"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="portfolio-card slider-slide"
-                >
+                <!-- Slide 2: Booking | Sistema de Agendamento | Builderall -->
+                <a href="https://www.behance.net/gallery/123120797/Booking-Sistema-de-Agendamento-Builderall" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide" aria-label="Ver Projeto Booking no Behance">
                   <picture>
-                    <img
-                      src="img/2.jpg"
-                      alt="Sistema de Agendamento"
-                      loading="lazy"
-                    />
+                    <img src="img/Booking | Sistema de Agendamento | Builderall.jpg" alt="Plataforma de Sistema de Agendamento" loading="lazy">
                   </picture>
                   <div class="portfolio-overlay">
                     <h3>Booking | Sistema de Agendamento | Builderall</h3>
-                    <p>
-                      Desenvolvimento de um sistema completo de agendamento
-                      online para diversos nichos de mercado.
-                    </p>
+                    <p>Desenvolvimento de um sistema completo de agendamento online.</p>
                   </div>
                 </a>
 
-                <a
-                  href="https://www.behance.net/gallery/236055417/Chatbot-WhatsApp-Launch-Manager-Builderall"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="portfolio-card slider-slide"
-                >
+                <!-- Slide 3: Chatbot - Plataforma CRM e Chatbot | WhatsApp Launch Manager-->
+                <a href="https://www.behance.net/gallery/236055417/Chatbot-WhatsApp-Launch-Manager-Builderall" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide" aria-label="Ver Projeto Chatbot no Behance">
                   <picture>
-                    <img
-                      src="img/3.jpg"
-                      alt="Ferramenta de Comunicação Corporativa"
-                      loading="lazy"
-                    />
+                    <img src="img/Chatbot - Plataforma CRM e Chatbot | WhatsApp Launch Manager.jpg" alt="Ferramenta de Comunicação Corporativa Chatbot" loading="lazy">
                   </picture>
                   <div class="portfolio-overlay">
-                    <h3>
-                      Chatbot - Plataforma CRM e Chatbot | WhatsApp Launch
-                      Manager
-                    </h3>
-                    <p>
-                      Criação de interface de gestão de leads e automação de
-                      comunicação via WhatsApp.
-                    </p>
+                    <h3>Chatbot - Plataforma CRM e Chatbot | WhatsApp Launch Manager</h3>
+                    <p>Criação de interface de gestão de leads e automação via WhatsApp.</p>
+                  </div>
+                </a>
+                
+                <!-- Slide 4: Bergen Elite -->
+                <a href="https://www.behance.net/gallery/169477571/Time-de-Basquetebol-Noruegues-Bergen-Elite-Basketball" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide" aria-label="Ver Projeto Bergen Elite no Behance">
+                  <picture>
+                    <img src="img/Time de Basquetebol Norueguês | Bergen Elite Basketball.jpg" alt="Website Esportivo para Cliente da Noruega (Bergen Elite)" loading="lazy">
+                  </picture>
+                  <div class="portfolio-overlay">
+                    <h3>Website | Time de Basquetebol Norueguês | Bergen Elite Basketball</h3>
+                    <p>Website Esportivo (Cliente da Noruega) com foco em engajamento.</p>
+                  </div>
+                </a>
+                
+                <!-- Slide 5: CRM | Wordpress for Builderall -->
+                <a href="https://www.behance.net/gallery/236126569/CRM-Wordpress-for-Builderall" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide" aria-label="Ver Projeto CRM Wordpress no Behance">
+                  <picture>
+                    <img src="img/CRM | Wordpress for Builderall.jpg" alt="Interface de Análise de Dados e Dashboard Analytics" loading="lazy">
+                  </picture>
+                  <div class="portfolio-overlay">
+                    <h3>CRM | Wordpress for Builderall</h3>
+                    <p>Interface de Análise de Dados para gerenciar funis de vendas.</p>
                   </div>
                 </a>
 
-                <a
-                  href="https://www.behance.net/gallery/169477571/Time-de-Basquetebol-Noruegues-Bergen-Elite-Basketball"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="portfolio-card slider-slide"
-                >
+                <!-- Slide 6: CRM WhatsApp Launch Manager -->
+                <a href="https://www.behance.net/gallery/236042721/CRM-WhatsApp-Launch-Manager-Builderall" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide" aria-label="Ver Projeto CRM WhatsApp no Behance">
                   <picture>
-                    <img
-                      src="img/4.jpg"
-                      alt="Website Esportivo Bergen Elite"
-                      loading="lazy"
-                    />
+                    <img src="img/CRM - Plataforma CRM e Chatbot | WhatsApp Launch Manager.jpg" alt="Design de CRM WhatsApp Launch Manager" loading="lazy">
                   </picture>
                   <div class="portfolio-overlay">
-                    <h3>
-                      Website | Time de Basquetebol Norueguês | Bergen Elite
-                      Basketball
-                    </h3>
-                    <p>
-                      Website Esportivo (Cliente da Noruega) com foco em
-                      engajamento de fãs e notícias da equipe.
-                    </p>
+                    <h3>CRM - Plataforma CRM e Chatbot | WhatsApp Launch Manager</h3>
+                    <p>Redesign de landing page de produto com foco em conversão.</p>
                   </div>
                 </a>
+
+                <!-- Slide 7: BBall Gerenciador -->
+                <a href="https://www.behance.net/gallery/133363875/BBall-Gerenciador-de-Basquetebol" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide bball-slide" aria-label="Ver Projeto BBall Gerenciador no Behance">
+                  <picture>
+                    <img src="img/BBall | Gerenciador de Basquetebol.jpg" alt="Interface de Construtor de Sites (BBall Gerenciador)" loading="lazy">
+                  </picture>
+                  <div class="portfolio-overlay">
+                    <h3>BBall | Gerenciador de Basquetebol</h3>
+                    <p>Plataforma de gestão esportiva completa para times de basquetebol.</p>
+                  </div>
+                </a>
+
+                <!-- Slide 8: Peixinhos III -->
+                <a href="https://www.behance.net/silvioyamada" target="_blank" rel="noopener noreferrer" class="portfolio-card slider-slide midia-social-slide" aria-label="Ver Projeto Peixinhos III no Behance">
+                  <picture>
+                    <img src="img/Midia Social - Peixinhos REstaurante Marília.jpg" alt="Peixinhos Restaurante - Marilia-SP" loading="lazy">
+                  </picture>
+                  <div class="portfolio-overlay">
+                    <h3>Mídias Sociais | Peixinhos III - Restaurante e Petiscaria</h3>
+                    <p>Estratégia e Design de conteúdo para redes sociais, fortalecendo a presença digital de um restaurante local.</p>
+                  </div>
+                </a>
+
               </div>
+              
+              <!-- BOTÃO DE CONTROLE (Adicionado) -->
+              <button class="slider-control next-btn" aria-label="Próximo Slide">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </button>
             </div>
 
-            <button class="slider-control prev-btn" aria-label="Slide Anterior">
-              <svg
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-            <button class="slider-control next-btn" aria-label="Próximo Slide">
-              <svg
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
-
-            <div class="slider-indicators"></div>
+            <!-- INDICADORES (Adicionado) -->
+            <div class="slider-indicators">
+              <!-- Os pontos serão gerados aqui pelo JS -->
+            </div>
           </div>
 
           <div class="portfolio-cta">
@@ -2088,7 +2137,7 @@
 
     <footer>
       <p>
-        📏 Desenvolvido por Silvio | UI/UX Designera © 2025
+        📏  Desenvolvido por Silvio | UI/UX Designer © 2025
       </p>
     </footer>
 
@@ -2114,6 +2163,16 @@
         let currentSlideIndex = 0;
         const totalSlides = slides.length;
         let slideWidth = 0;
+
+        // Aplicar background blur apenas no slide de mídia social
+        const midiaSocialSlide = sliderContainer.querySelector(".midia-social-slide");
+        if (midiaSocialSlide) {
+          const img = midiaSocialSlide.querySelector("img");
+          if (img) {
+            const imgSrc = img.getAttribute("src");
+            midiaSocialSlide.style.setProperty('--bg-image', `url('${imgSrc}')`);
+          }
+        }
 
         function adjustDimensions() {
           slideWidth = view.clientWidth;
