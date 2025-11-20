@@ -2776,9 +2776,13 @@
         const slides = sliderContainer.querySelectorAll(".slider-slide");
         const prevBtn = sliderContainer.querySelector(".prev-btn");
         const nextBtn = sliderContainer.querySelector(".next-btn");
-        const indicatorsContainer =
-          sliderContainer.querySelector(".slider-indicators");
+        const indicatorsContainer = sliderContainer.querySelector(
+          ".slider-indicators"
+        );
         const view = sliderContainer.querySelector(".slider-main-view");
+
+        // Guard clauses: ensure required nodes exist
+        if (!track || !view || slides.length === 0) return;
 
         let currentSlideIndex = 0;
         const totalSlides = slides.length;
@@ -2792,10 +2796,9 @@
           const img = midiaSocialSlide.querySelector("img");
           if (img) {
             const imgSrc = img.getAttribute("src");
-            midiaSocialSlide.style.setProperty(
-              "--bg-image",
-              `url('${imgSrc}')`
-            );
+            if (imgSrc) {
+              midiaSocialSlide.style.setProperty("--bg-image", `url('${imgSrc}')`);
+            }
           }
         }
 
@@ -2829,6 +2832,7 @@
         }
 
         function createIndicators() {
+          if (!indicatorsContainer) return;
           indicatorsContainer.innerHTML = "";
           for (let i = 0; i < totalSlides; i++) {
             const dot = document.createElement("span");
@@ -2843,6 +2847,7 @@
         }
 
         function updateIndicators() {
+          if (!indicatorsContainer) return;
           indicatorsContainer
             .querySelectorAll(".indicator-dot")
             .forEach((dot, index) => {
@@ -2853,30 +2858,32 @@
         createIndicators();
         adjustDimensions();
 
-        prevBtn.addEventListener("click", goToPrevSlide);
-        nextBtn.addEventListener("click", goToNextSlide);
+        if (prevBtn) prevBtn.addEventListener("click", goToPrevSlide);
+        if (nextBtn) nextBtn.addEventListener("click", goToNextSlide);
 
         window.addEventListener("resize", () => {
           adjustDimensions();
         });
 
         let startX = 0;
-        view.addEventListener("touchstart", (e) => {
-          startX = e.touches[0].clientX;
-        });
+        if (view) {
+          view.addEventListener("touchstart", (e) => {
+            startX = e.touches && e.touches[0] ? e.touches[0].clientX : 0;
+          });
 
-        view.addEventListener("touchend", (e) => {
-          const endX = e.changedTouches[0].clientX;
-          const deltaX = endX - startX;
+          view.addEventListener("touchend", (e) => {
+            const endX = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientX : 0;
+            const deltaX = endX - startX;
 
-          if (Math.abs(deltaX) > 50) {
-            if (deltaX > 0) {
-              goToPrevSlide();
-            } else {
-              goToNextSlide();
+            if (Math.abs(deltaX) > 50) {
+              if (deltaX > 0) {
+                goToPrevSlide();
+              } else {
+                goToNextSlide();
+              }
             }
-          }
-        });
+          });
+        }
       }
 
       function initScrollAnimations() {
