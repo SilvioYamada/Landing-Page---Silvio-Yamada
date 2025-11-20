@@ -439,6 +439,50 @@
           align-items: center;
         }
 
+        /* Variant: combinação que combina com o header escuro */
+        .lang-toggle.variant-combo .lang-btn {
+          width: 46px;
+          height: 46px;
+          border-radius: 12px;
+          background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.24));
+          border: 1px solid rgba(255,255,255,0.04);
+          box-shadow: 0 6px 18px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.02);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          padding: 0;
+        }
+
+        .lang-toggle.variant-combo .lang-btn .lang-flag { font-size: 20px; transform: translateY(1px); }
+
+        /* inner square with subtle rounded corners and soft shadow */
+        .lang-toggle.variant-combo .lang-btn[data-lang="pt"]::before {
+          content: "";
+          position: absolute;
+          width: 28px;
+          height: 28px;
+          border-radius: 7px;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(180deg, #20d16a, #17a44a);
+          box-shadow: 0 6px 18px rgba(23,164,74,0.20), inset 0 1px 0 rgba(255,255,255,0.06);
+          z-index: 0;
+        }
+
+        /* EN button: softer neutral background so flags read clearly */
+        .lang-toggle.variant-combo .lang-btn[data-lang="en"] {
+          background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(0,0,0,0.18));
+          border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        /* hover: subtle lift and highlight */
+        .lang-toggle.variant-combo .lang-btn:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+
         .lang-btn {
           width: 46px;
           height: 46px;
@@ -2018,7 +2062,7 @@
           <li><a href="#contact" data-i18n="nav.contact">Contato</a></li>
         </ul>
       </nav>
-      <div class="lang-toggle" aria-hidden="false">
+      <div class="lang-toggle variant-combo" aria-hidden="false">
         <button class="lang-btn" data-lang="pt" title="Português">🇧🇷</button>
         <button class="lang-btn" data-lang="en" title="English">🇺🇸</button>
       </div>
