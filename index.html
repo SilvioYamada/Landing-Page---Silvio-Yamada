@@ -219,7 +219,8 @@
         width: 100%;
         padding: 14px 5%;
         display: grid;
-        grid-template-columns: auto 1fr auto;
+        /* 4 columns: logo | center nav | lang-toggle | hamburger */
+        grid-template-columns: auto 1fr auto auto;
         align-items: center;
         gap: 16px;
         background: rgba(18, 18, 18, 0.9);
@@ -306,6 +307,7 @@
         background: transparent;
         border: none;
         z-index: 1001;
+        justify-self: end; /* ensure hamburger sits at far right */
       }
 
       .menu-toggle span {
