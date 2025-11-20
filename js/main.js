@@ -1,7 +1,37 @@
-document.addEventListener("DOMContentLoaded", () => {
+// Clean, minimal JS: error catcher, menu, slider, observers, i18n (basic)
+// Temporary error catcher (visible overlay)
+window.addEventListener('error', function (e) {
+  console.error('Captured error:', e.message, e.filename + ':' + e.lineno + ':' + e.colno);
+  try {
+    const existing = document.getElementById('js-error-capture');
+    if (existing) existing.remove();
+    const pre = document.createElement('pre');
+    pre.id = 'js-error-capture';
+    pre.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:99999;background:#fff;color:#000;padding:10px;max-width:96%;max-height:40vh;overflow:auto;border-radius:6px;font-size:12px;box-shadow:0 6px 20px rgba(0,0,0,0.4);';
+    pre.textContent = 'Error: ' + e.message + '\nFile: ' + e.filename + ':' + e.lineno + ':' + e.colno + '\n' + (e.error && e.error.stack ? e.error.stack : '');
+    if (document.body) document.body.appendChild(pre);
+  } catch (err) {}
+});
+
+window.addEventListener('unhandledrejection', function (ev) {
+  console.error('Unhandled promise rejection', ev.reason);
+  try {
+    const existing = document.getElementById('js-error-capture');
+    if (existing) existing.remove();
+    const pre = document.createElement('pre');
+    pre.id = 'js-error-capture';
+    pre.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:99999;background:#fff;color:#000;padding:10px;max-width:96%;max-height:40vh;overflow:auto;border-radius:6px;font-size:12px;box-shadow:0 6px 20px rgba(0,0,0,0.4);';
+    pre.textContent = 'UnhandledRejection: ' + String(ev.reason);
+    if (document.body) document.body.appendChild(pre);
+  } catch (err) {}
+});
+
+document.addEventListener('DOMContentLoaded', function () {
   initPortfolioSlider();
   initScrollAnimations();
   initNavScrollSpy();
+  initMenu();
+  initLangButtons();
 });
 
 function initPortfolioSlider() {
@@ -289,5 +319,55 @@ const TRANSLATIONS = {
     "portfolio.title": "Portfólio Seletivo",
     "experience.title": "Experiência Comprovada",
     "btn.view": "Ver Site",
-    "contact.title": "Vamos Transformar Seus Desafios em Sucesso?",
-... (file truncated)
+    "contact.title": "Vamos Transformar Seus Desafios em Sucesso?"
+  },
+  en: {
+    "nav.home": "Home",
+    "nav.about": "About",
+    "nav.portfolio": "Portfolio",
+    "nav.experience": "Experience",
+    "nav.contact": "Contact",
+    "hero.title": "Hi, I'm Silvio.",
+    "hero.subtitle": "Designer & Full-Stack Developer",
+    "portfolio.title": "Selected Portfolio",
+    "experience.title": "Proven Experience",
+    "btn.view": "View Site",
+    "contact.title": "Ready to Turn Your Challenges into Success?"
+  }
+};
+
+function applyTranslations(lang) {
+  const dict = TRANSLATIONS[lang] || TRANSLATIONS.pt;
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.getAttribute('data-i18n');
+    if (!key) return;
+    const val = dict[key];
+    if (typeof val !== 'undefined') el.innerHTML = val;
+  });
+  document.querySelectorAll('[data-i18n-alt]').forEach((el) => {
+    const key = el.getAttribute('data-i18n-alt');
+    if (!key) return;
+    const val = dict[key];
+    if (typeof val !== 'undefined') el.setAttribute('alt', val);
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach((el) => {
+    const key = el.getAttribute('data-i18n-title');
+    if (!key) return;
+    const val = dict[key];
+    if (typeof val !== 'undefined') el.setAttribute('title', val);
+  });
+  document.documentElement.lang = (lang === 'pt' ? 'pt-br' : 'en');
+  try { localStorage.setItem('site_lang', lang); } catch (e) {}
+}
+
+function initLangButtons() {
+  document.querySelectorAll('.lang-btn').forEach((btn) => {
+    btn.addEventListener('click', function () {
+      const lang = btn.getAttribute('data-lang') || 'pt';
+      applyTranslations(lang);
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-lang') === lang));
+    });
+  });
+  const saved = (function () { try { return localStorage.getItem('site_lang'); } catch (e) { return null; } })();
+  applyTranslations(saved || (navigator.language && navigator.language.startsWith('en') ? 'en' : 'pt'));
+}
