@@ -837,8 +837,11 @@
       .company-logo img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         display: block;
+        padding: 6px;
+        filter: contrast(1.05) saturate(1.05);
+        image-rendering: auto;
       }
 
       .company-text h3 {
