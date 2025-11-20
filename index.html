@@ -786,7 +786,7 @@
         background-position: center;
         filter: blur(30px) brightness(0.5);
         transform: scale(1.2);
-        z-index: 0;
+        display: none; /* Initially hidden */
       }
 
       .midia-social-slide:hover img {
@@ -1446,7 +1446,7 @@
           margin: 0;
           width: 100%;
         }
-
+        .nav-close { display: block; /* Show on mobile */ }
         nav ul li a {
           display: block;
           padding: 18px 0;
