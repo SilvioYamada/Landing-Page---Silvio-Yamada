@@ -470,7 +470,8 @@
         opacity: 0;
         pointer-events: none;
         transition: opacity 220ms ease;
-        z-index: 1001; /* below nav (1002) and above page content */
+        /* place overlay below header so header+nav stay clickable/visible */
+        z-index: 999; /* header is 1000, nav (child) will be above overlay */
       }
 
       .menu-overlay.active {
