@@ -2759,10 +2759,37 @@
     </footer>
 
     <script>
+      // Visible error overlay to help capture runtime errors in the browser
+      window.addEventListener('error', function (e) {
+        try {
+          console.error('Captured error:', e.message, e.filename + ':' + e.lineno + ':' + e.colno);
+          const existing = document.getElementById('js-error-capture');
+          if (existing) existing.remove();
+          const pre = document.createElement('pre');
+          pre.id = 'js-error-capture';
+          pre.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:99999;background:#fff;color:#000;padding:10px;max-width:96%;max-height:40vh;overflow:auto;border-radius:6px;font-size:12px;box-shadow:0 6px 20px rgba(0,0,0,0.4);';
+          pre.textContent = 'Error: ' + e.message + '\nFile: ' + e.filename + ':' + e.lineno + ':' + e.colno + '\n' + (e.error && e.error.stack ? e.error.stack : '');
+          if (document.body) document.body.appendChild(pre);
+        } catch (err) {}
+      });
+
+      window.addEventListener('unhandledrejection', function (ev) {
+        try {
+          console.error('Unhandled promise rejection', ev.reason);
+          const existing = document.getElementById('js-error-capture');
+          if (existing) existing.remove();
+          const pre = document.createElement('pre');
+          pre.id = 'js-error-capture';
+          pre.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:99999;background:#fff;color:#000;padding:10px;max-width:96%;max-height:40vh;overflow:auto;border-radius:6px;font-size:12px;box-shadow:0 6px 20px rgba(0,0,0,0.4);';
+          pre.textContent = 'UnhandledRejection: ' + String(ev.reason);
+          if (document.body) document.body.appendChild(pre);
+        } catch (err) {}
+      });
+
       document.addEventListener("DOMContentLoaded", () => {
-        initPortfolioSlider();
-        initScrollAnimations();
-        initNavScrollSpy();
+        try { initPortfolioSlider(); } catch (e) { console.error('initPortfolioSlider error', e); }
+        try { initScrollAnimations(); } catch (e) { console.error('initScrollAnimations error', e); }
+        try { initNavScrollSpy(); } catch (e) { console.error('initNavScrollSpy error', e); }
       });
 
       function initPortfolioSlider() {
@@ -2777,6 +2804,9 @@
           sliderContainer.querySelector(".slider-indicators");
         const view = sliderContainer.querySelector(".slider-main-view");
 
+        // defensive guards
+        if (!track || !view || slides.length === 0) return;
+
         let currentSlideIndex = 0;
         const totalSlides = slides.length;
         let slideWidth = 0;
@@ -2789,15 +2819,12 @@
           const img = midiaSocialSlide.querySelector("img");
           if (img) {
             const imgSrc = img.getAttribute("src");
-            midiaSocialSlide.style.setProperty(
-              "--bg-image",
-              `url('${imgSrc}')`
-            );
+            if (imgSrc) midiaSocialSlide.style.setProperty("--bg-image", `url('${imgSrc}')`);
           }
         }
 
         function adjustDimensions() {
-          slideWidth = view.clientWidth;
+          slideWidth = view.clientWidth || 0;
           slides.forEach((slide) => {
             slide.style.width = `${slideWidth}px`;
           });
@@ -2820,12 +2847,12 @@
         }
 
         function goToPrevSlide() {
-          currentSlideIndex =
-            (currentSlideIndex - 1 + totalSlides) % totalSlides;
+          currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
           updateSliderPosition();
         }
 
         function createIndicators() {
+          if (!indicatorsContainer) return;
           indicatorsContainer.innerHTML = "";
           for (let i = 0; i < totalSlides; i++) {
             const dot = document.createElement("span");
@@ -2840,6 +2867,7 @@
         }
 
         function updateIndicators() {
+          if (!indicatorsContainer) return;
           indicatorsContainer
             .querySelectorAll(".indicator-dot")
             .forEach((dot, index) => {
@@ -2850,30 +2878,32 @@
         createIndicators();
         adjustDimensions();
 
-        prevBtn.addEventListener("click", goToPrevSlide);
-        nextBtn.addEventListener("click", goToNextSlide);
+        if (prevBtn) prevBtn.addEventListener("click", goToPrevSlide);
+        if (nextBtn) nextBtn.addEventListener("click", goToNextSlide);
 
         window.addEventListener("resize", () => {
           adjustDimensions();
         });
 
         let startX = 0;
-        view.addEventListener("touchstart", (e) => {
-          startX = e.touches[0].clientX;
-        });
+        if (view) {
+          view.addEventListener("touchstart", (e) => {
+            startX = e.touches && e.touches[0] ? e.touches[0].clientX : 0;
+          });
 
-        view.addEventListener("touchend", (e) => {
-          const endX = e.changedTouches[0].clientX;
-          const deltaX = endX - startX;
+          view.addEventListener("touchend", (e) => {
+            const endX = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientX : 0;
+            const deltaX = endX - startX;
 
-          if (Math.abs(deltaX) > 50) {
-            if (deltaX > 0) {
-              goToPrevSlide();
-            } else {
-              goToNextSlide();
+            if (Math.abs(deltaX) > 50) {
+              if (deltaX > 0) {
+                goToPrevSlide();
+              } else {
+                goToNextSlide();
+              }
             }
-          }
-        });
+          });
+        }
       }
 
       function initScrollAnimations() {
