@@ -227,6 +227,33 @@
         z-index: 1000;
       }
 
+      /* Responsive improvements (tablet breakpoint) */
+      @media (max-width: 1024px) {
+        header {
+          padding: 12px 4%;
+          grid-template-columns: auto 1fr auto;
+        }
+
+        .menu-toggle {
+          display: flex; /* show hamburger for medium screens */
+        }
+
+        nav ul {
+          gap: 20px; /* reduce spacing on tablet */
+        }
+
+        .logo {
+          font-size: 1.05rem;
+        }
+
+        .logo-profile {
+          width: 42px;
+          height: 42px;
+        }
+
+        .lang-toggle { gap: 14px; }
+      }
+
       .logo {
         font-size: 1.25rem;
         font-weight: 700;
@@ -404,6 +431,11 @@
           pointer-events: auto;
         }
 
+        /* improve mobile nav performance and touch targets */
+        nav, nav.active { will-change: transform; }
+
+        .menu-toggle { padding: 10px; }
+
         nav.active {
           transform: translateX(0);
         }
@@ -412,8 +444,8 @@
           display: none;
           flex-direction: column;
           list-style: none;
-          padding: 18px 16px;
-          gap: 8px;
+          padding: 18px 12px;
+          gap: 6px;
         }
 
         nav.active ul {
@@ -426,10 +458,11 @@
 
         nav ul li a {
           display: block;
-          padding: 12px 10px;
+          padding: 14px 12px; /* increase tap area */
           font-size: 1.05rem;
           color: var(--color-text-primary);
           border-bottom: 1px solid rgba(255,255,255,0.03);
+          border-radius: 8px;
         }
 
         /* Lang toggle (desktop defaults) */
@@ -537,7 +570,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 10px;
+          gap: 12px;
         }
 
         /* Flag buttons (mobile overrides) */
@@ -597,7 +630,13 @@
         .lang-toggle {
           right: 16px;
           top: 10px;
+          gap: 10px;
         }
+
+        /* Ensure flags remain tappable on small devices */
+        .lang-btn { width: 44px; height: 44px; border-radius: 10px; }
+
+        header { padding: 10px 3%; }
 
         /* Slightly larger touch targets */
         nav ul li a {
