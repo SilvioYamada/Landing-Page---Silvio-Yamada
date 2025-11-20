@@ -299,44 +299,6 @@
         .logo span { max-width: 180px; font-size: clamp(0.9rem, 1.1vw + 0.1rem, 1.05rem); }
       }
 
-      /* Show hamburger and switch to drawer nav at <= 890px */
-      @media (max-width: 890px) {
-        header {
-          padding: 12px 4%;
-          grid-template-columns: auto 1fr auto; /* logo | spacer | controls */
-        }
-
-        /* show the hamburger */
-        .menu-toggle {
-          display: flex;
-        }
-
-        /* Drawer nav behaviour on medium-small screens */
-        nav {
-          position: fixed;
-          top: 64px;
-          right: 0;
-          height: calc(100% - 64px);
-          width: 100%;
-          max-width: 360px;
-          background: rgba(18, 18, 18, 0.98);
-          backdrop-filter: blur(6px);
-          transform: translateX(100%);
-          transition: transform 0.28s ease;
-          z-index: 1002;
-          display: block;
-          pointer-events: auto;
-        }
-
-        nav.active { transform: translateX(0); }
-
-        nav ul { display: none; flex-direction: column; padding: 18px 12px; gap: 6px; }
-        nav.active ul { display: flex; }
-
-        /* Ensure overlay can be used to close the drawer */
-        .menu-overlay { z-index: 1000; pointer-events: auto; }
-      }
-
       @media (max-width: 768px) {
         .logo { font-size: 1rem; gap: 8px; }
         .logo-profile { width: 36px; height: 36px; }
@@ -2306,48 +2268,6 @@
         }
         .lang-toggle.variant-combo { gap: 12px !important; }
       }
-
-      /* Force hamburger/drawer at <=890px (late in the stylesheet to win cascade) */
-      /* Responsive menu core: ensure predictable hamburger/drawer behavior
-         placed late to win cascade and avoid conflicts with earlier rules */
-      @media (max-width: 1024px) {
-        /* show hamburger on tablet and below */
-        .menu-toggle { display: flex !important; }
-
-        /* collapse desktop nav; drawer will show links when active */
-        nav {
-          position: fixed !important;
-          right: 0 !important;
-          top: var(--header-height, 64px) !important;
-          width: min(88%, 360px) !important;
-          max-width: 360px !important;
-          height: calc(100% - var(--header-height, 64px)) !important;
-          background: rgba(18,18,18,0.98) !important;
-          backdrop-filter: blur(6px) !important;
-          transform: translateX(100%) !important;
-          transition: transform 0.28s ease !important;
-          z-index: 1200 !important;
-          display: block !important;
-          pointer-events: auto !important;
-        }
-
-        nav.active { transform: translateX(0) !important; }
-
-        nav ul { display: none !important; flex-direction: column !important; padding: 18px 12px !important; gap: 6px !important; }
-        nav.active ul { display: flex !important; }
-
-        /* overlay should sit below header but above page content */
-        .menu-overlay { z-index: 1100 !important; pointer-events: none; }
-        .menu-overlay.active { pointer-events: auto !important; }
-      }
-
-      /* Small screens: drawer becomes full width and touch targets increase */
-      @media (max-width: 420px) {
-        .menu-toggle { display: flex !important; }
-        nav { left: 0 !important; right: 0 !important; width: 100% !important; max-width: none !important; }
-        nav ul { padding: 22px 18px !important; }
-        nav ul li a { padding: 16px 14px !important; font-size: 1.12rem !important; }
-      }
     </style>
   </head>
   <body>
@@ -3206,32 +3126,6 @@
       const nav = document.querySelector("nav");
       const menuOverlay = document.querySelector(".menu-overlay");
       const navLinks = document.querySelectorAll("nav ul li a");
-
-      // Ensure nav sits below header and uses a CSS variable for height
-      function setNavPosition() {
-        const header = document.querySelector("header");
-        if (!header || !nav) return;
-        const h = Math.round(header.getBoundingClientRect().height);
-        document.documentElement.style.setProperty("--header-height", h + "px");
-        // also set inline top/height as defensive fallback
-        try {
-          nav.style.top = h + "px";
-          nav.style.height = `calc(100% - ${h}px)`;
-        } catch (e) {}
-      }
-
-      // debounce helper
-      function debounce(fn, wait = 100) {
-        let t = null;
-        return function (...args) {
-          clearTimeout(t);
-          t = setTimeout(() => fn.apply(this, args), wait);
-        };
-      }
-
-      // Run on load and resize to keep drawer placed under header
-      setNavPosition();
-      window.addEventListener("resize", debounce(setNavPosition, 120));
 
       // Accessibility / focus trap variables
       let previousActiveElement = null;
