@@ -870,6 +870,29 @@
         transform: translateX(3px);
       }
 
+      /* Logo ao lado do título da experiência */
+      .experience-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .experience-header h3 {
+        margin: 0;
+      }
+
+      .company-logo {
+        width: 48px;
+        height: auto;
+        display: inline-block;
+      }
+
+      @media (max-width: 768px) {
+        .company-logo {
+          width: 36px;
+        }
+      }
+
       /* --- 8. Seção Contato --- */
       #contact .container {
         text-align: center;
@@ -2045,7 +2068,10 @@
 
           <div class="experience-grid">
             <article class="experience-card">
-              <h3>Senior User Experience Designer</h3>
+              <div class="experience-header">
+                <h3>Senior User Experience Designer</h3>
+                <img src="img/builderall.png" alt="Builderall logo" class="company-logo" loading="lazy" />
+              </div>
               <h4>Builderall</h4>
               <p class="company-info">
                 A Builderall é uma plataforma de marketing digital completa que
