@@ -555,7 +555,12 @@
         .lang-toggle.variant-combo .lang-btn .svg-flag {
           width: 62%;
           height: auto;
-          display: block;
+          display: block !important;
+        }
+
+        /* Also ensure variant-combo uses the same visible svg style on desktop */
+        .lang-toggle.variant-combo .lang-btn {
+          overflow: visible;
         }
 
         /* Larger screens: increase flag container and svg proportion */
