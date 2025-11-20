@@ -841,6 +841,33 @@
         display: block;
       }
 
+      /* High-quality rendering for specific logos */
+      .company-logo .logo-quality {
+        object-fit: contain;
+        padding: 4px;
+        filter: contrast(1.06) saturate(1.05);
+        image-rendering: auto;
+      }
+
+      /* Larger circular logo specifically for Li Modas card */
+      .li-modas-card .company-logo {
+        width: 72px;
+        height: 72px;
+        flex: 0 0 72px;
+      }
+
+      .li-modas-card .company-logo .logo-quality {
+        padding: 2px;
+      }
+
+      @media (max-width: 768px) {
+        .li-modas-card .company-logo {
+          width: 56px;
+          height: 56px;
+          flex: 0 0 56px;
+        }
+      }
+
       .company-text h3 {
         margin: 0;
       }
@@ -2126,9 +2153,16 @@
               >
             </article>
 
-            <article class="experience-card">
-              <h3>Designer Gráfico</h3>
-              <h4>Li Modas Oficial</h4>
+            <article class="experience-card li-modas-card">
+              <div class="company-header">
+                <div class="company-logo">
+                  <img src="img/li-modas-oficial.png" alt="Li Modas Oficial logo" class="logo-quality" />
+                </div>
+                <div class="company-text">
+                  <h3>Designer Gráfico</h3>
+                  <h4>Li Modas Oficial</h4>
+                </div>
+              </div>
               <p class="company-info">
                 A Li Modas Oficial é uma loja virtual especializada em vestidos
                 temáticos infantis e juvenis, oferecendo produtos no atacado e
