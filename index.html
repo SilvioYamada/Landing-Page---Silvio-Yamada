@@ -814,6 +814,48 @@
         border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
       }
 
+      /* Company header with circular logo */
+      .company-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 10px;
+      }
+
+      .company-logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex: 0 0 56px;
+        display: inline-block;
+        background: #fff;
+        border: 2px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .company-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .company-text h3 {
+        margin: 0;
+      }
+
+      @media (max-width: 768px) {
+        .company-logo {
+          width: 44px;
+          height: 44px;
+          flex: 0 0 44px;
+        }
+
+        .company-text h3 {
+          font-size: 1rem;
+        }
+      }
+
       .experience-card .meta {
         font-size: 0.9rem;
         color: var(--color-text-secondary);
@@ -868,29 +910,6 @@
 
       .experience-card .view-more-btn:hover::after {
         transform: translateX(3px);
-      }
-
-      /* Logo ao lado do título da experiência */
-      .experience-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .experience-header h3 {
-        margin: 0;
-      }
-
-      .company-logo {
-        width: 48px;
-        height: auto;
-        display: inline-block;
-      }
-
-      @media (max-width: 768px) {
-        .company-logo {
-          width: 36px;
-        }
       }
 
       /* --- 8. Seção Contato --- */
@@ -2068,11 +2087,15 @@
 
           <div class="experience-grid">
             <article class="experience-card">
-              <div class="experience-header">
-                <h3>Senior User Experience Designer</h3>
-                <img src="img/builderall.png" alt="Builderall logo" class="company-logo" loading="lazy" />
+              <div class="company-header">
+                <div class="company-logo">
+                  <img src="img/builderall.png" alt="Builderall logo" />
+                </div>
+                <div class="company-text">
+                  <h3>Senior User Experience Designer</h3>
+                  <h4>Builderall</h4>
+                </div>
               </div>
-              <h4>Builderall</h4>
               <p class="company-info">
                 A Builderall é uma plataforma de marketing digital completa que
                 oferece diversas ferramentas em um único ambiente, com o
