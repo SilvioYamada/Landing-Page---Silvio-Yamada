@@ -265,6 +265,47 @@
         gap: 12px;
       }
 
+      /* Improve logo responsiveness: allow text to shrink/truncate and image to scale */
+      .logo {
+        min-width: 0; /* allow flex children to shrink */
+      }
+
+      /* Keep logo text inline and scale responsively (no ellipsis) */
+      .logo span {
+        display: inline-block;
+        vertical-align: middle;
+        white-space: nowrap; /* keep text in one line */
+        overflow: visible;
+        text-overflow: clip;
+        max-width: 260px;
+        line-height: 1.05;
+        font-size: clamp(0.95rem, 1.2vw + 0.2rem, 1.25rem);
+      }
+
+      .logo-profile {
+        flex: 0 0 auto;
+      }
+
+      /* Tablet breakpoint adjustments */
+      @media (max-width: 1024px) {
+        .logo { font-size: 1.05rem; gap: 10px; }
+        .logo-profile { width: 42px; height: 42px; }
+        .logo span { max-width: 180px; font-size: clamp(0.9rem, 1.1vw + 0.1rem, 1.05rem); }
+      }
+
+      @media (max-width: 768px) {
+        .logo { font-size: 1rem; gap: 8px; }
+        .logo-profile { width: 36px; height: 36px; }
+        .logo span { max-width: 140px; font-size: clamp(0.85rem, 1.0vw + 0.05rem, 1rem); }
+      }
+
+      @media (max-width: 420px) {
+        /* keep inline layout on very small devices, but shrink text */
+        .logo { gap: 6px; }
+        .logo-profile { width: 34px; height: 34px; }
+        .logo span { max-width: 100px; font-size: clamp(0.8rem, 1.0vw, 0.95rem); }
+      }
+
       /* Foto de Perfil com Borda Animada */
       .logo-profile {
         position: relative;
